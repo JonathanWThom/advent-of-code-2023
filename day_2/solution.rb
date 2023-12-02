@@ -9,14 +9,26 @@ module Day2
     end
   end
 
-  module HasGames
-    # todo
-  end
-
-  class SnowIslandWater
+  module HasGamesFromLines
     def initialize(path)
       @path = path
     end
+
+    private
+
+    attr_reader :path
+
+    def games
+      @_games ||= lines.map { |line| Game.new(line) }
+    end
+
+    def lines
+      @_lines ||= File.readlines(path)
+    end
+  end
+
+  class SnowIslandWater
+    include HasGamesFromLines
 
     def fewest_cubes_power
       game_powers.sum
@@ -24,37 +36,20 @@ module Day2
 
     private
 
-    def lines
-      @_lines ||= File.readlines(@path)
-    end
-
     def game_powers
       games.map(&:cube_power)
-    end
-
-    def games
-      @_games ||= lines.map { |line| Game.new(line) }
     end
   end
 
   class SnowIsland
-    def initialize(path)
-      @path = path
-    end
+    include HasGamesFromLines
+
 
     def possible_game_sum
       possible_game_ids.sum
     end
 
     private
-
-    def lines
-      @_lines ||= File.readlines(@path)
-    end
-
-    def games
-      @_games ||= lines.map { |line| Game.new(line) }
-    end
 
     def possible_game_ids
       games.reject { |game| game.impossible? }.map(&:id)
