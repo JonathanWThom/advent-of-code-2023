@@ -7,8 +7,7 @@ class Day3::SolutionTest < Minitest::Test
   end
 
   def test_part_1_full
-    # too low
-    assert_equal(516054, Day3::Solution.part_1("day_3/input.txt"))
+    assert_equal(517021, Day3::Solution.part_1("day_3/input.txt"))
   end
 
   #def test_part_2_sample
